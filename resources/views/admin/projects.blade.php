@@ -1002,14 +1002,7 @@ $(document).ready(function() {
         function disableSubmitButton() {
             submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
         }
-
-        // // Clear errors
-        // form.find('.is-invalid').removeClass('is-invalid');
-        // form.find('.invalid-feedback').remove();
-        
-        // // Disable submit button
-        // submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
-                
+ 
         // AJAX request
         $.ajax({
             url: form.attr('action'),
