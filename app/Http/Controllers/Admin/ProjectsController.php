@@ -102,7 +102,7 @@ class ProjectsController extends Controller
                     $remarks = "";
                     $status = "";
 
-                    if ($item->featured == 0) {
+                    if (!$item->featured) {
                         $remarks = '<span class="badge badge-dark">No</span>';
                     } else {
                         $remarks = '<span class="badge badge-success">Yes</span>';
@@ -227,7 +227,7 @@ class ProjectsController extends Controller
                         'technologies' => $item->technologies ? $item->technologies : '-',
                         'image' => $item->image ? $image : '-',
                         'category' => $item->category ? $item->category : '-',
-                        'featured' => $item->featured ? $remarks : '-',
+                        'featured' => $remarks,
                         'order' => $item->order,
                         'status' => $status,
                         'action' => $action,

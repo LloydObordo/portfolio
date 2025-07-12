@@ -626,38 +626,38 @@
                     d.isCurrentFilter = $('#isCurrentFilter').val();
                     d.orderFilter = $('#orderFilter').val();
                 },
-                // error: function (xhr, error, thrown) {                   
-                //     // Add retry logic instead of just reloading
-                //     var retryCount = parseInt(localStorage.getItem('dtRetryCount') || '0');
+                error: function (xhr, error, thrown) {                   
+                    // Add retry logic instead of just reloading
+                    var retryCount = parseInt(localStorage.getItem('dtRetryCount') || '0');
                     
-                //     if (retryCount < 3) {
-                //         // Increment retry counter
-                //         localStorage.setItem('dtRetryCount', retryCount + 1);
+                    if (retryCount < 3) {
+                        // Increment retry counter
+                        localStorage.setItem('dtRetryCount', retryCount + 1);
                         
-                //         // Show message
-                //         toastr.info('Retrying data request...', 'Please wait', {
-                //             timeOut: 1500,
-                //             progressBar: true
-                //         });
+                        // Show message
+                        toastr.info('Retrying data request...', 'Please wait', {
+                            timeOut: 1500,
+                            progressBar: true
+                        });
                         
-                //         // Retry after a short delay
-                //         setTimeout(function() {
-                //             table.ajax.reload();
-                //         }, 1500);
-                //     } else {
-                //         // Reset counter and show reload message
-                //         localStorage.setItem('dtRetryCount', '0');
-                //         toastr.info('Having trouble loading data. Refreshing the page...', 'Please wait', {
-                //             timeOut: 2000,
-                //             progressBar: true
-                //         });
+                        // Retry after a short delay
+                        setTimeout(function() {
+                            table.ajax.reload();
+                        }, 1500);
+                    } else {
+                        // Reset counter and show reload message
+                        localStorage.setItem('dtRetryCount', '0');
+                        toastr.info('Having trouble loading data. Refreshing the page...', 'Please wait', {
+                            timeOut: 2000,
+                            progressBar: true
+                        });
                         
-                //         // Reload after giving user time to see message
-                //         setTimeout(function() {
-                //             location.reload();
-                //         }, 2000);
-                //     }
-                // }
+                        // Reload after giving user time to see message
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    }
+                }
             },
             columns: [
                 { data: 'id', name: 'id', class: 'hidden' },
@@ -720,11 +720,11 @@
     });
 </script>
 <script>
-// Global variables to track images
-let deletedGalleryImages = [];
-let currentGalleryImages = [];
-let hasMainImage = false;
-let originalMainImage = null;
+    // Global variables to track images
+    let deletedGalleryImages = [];
+    let currentGalleryImages = [];
+    let hasMainImage = false;
+    let originalMainImage = null;
 
 // Function to reset the add form completely
 function resetAddForm() {
@@ -988,12 +988,27 @@ $(document).ready(function() {
         const submitBtn = $('#saveItemBtn');
         const originalBtnText = submitBtn.html();
 
-        // Clear errors
-        form.find('.is-invalid').removeClass('is-invalid');
-        form.find('.invalid-feedback').remove();
+        // Handle clearing of previous errors
+        function clearErrors() {
+            form.find('.is-invalid').removeClass('is-invalid');
+            form.find('.invalid-feedback').remove();
+        }
+
+        // Handle submit button state
+        function enableSubmitButton() {
+            submitBtn.prop('disabled', false).html('Save');
+        }
         
-        // Disable submit button
-        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
+        function disableSubmitButton() {
+            submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
+        }
+
+        // // Clear errors
+        // form.find('.is-invalid').removeClass('is-invalid');
+        // form.find('.invalid-feedback').remove();
+        
+        // // Disable submit button
+        // submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
                 
         // AJAX request
         $.ajax({
