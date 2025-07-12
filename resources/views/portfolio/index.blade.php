@@ -17,10 +17,10 @@
                     {{ $professionalSummary->summary ?? 'A passionate full-stack developer with over 5 years of experience creating web applications that solve real-world problems.' }}
                 </p>
                 <div class="d-flex gap-3 flex-wrap">
-                    <a href="#projects" class="btn btn-primary-custom btn-lg">
+                    <a href="#projects" class="btn btn-primary-custom btn-md">
                         <i class="fas fa-eye fa-lg text-light me-2"></i><span class="text-light">View My Work</span>
                     </a>
-                    <a href="#contact" class="btn btn-primary-custom btn-lg">
+                    <a href="#contact" class="btn btn-primary-custom btn-md">
                         <i class="fas fa-envelope fa-lg text-light me-2"></i><span class="text-light">Get In Touch</span>
                     </a>
                 </div>
@@ -133,8 +133,8 @@
                                     </div>
                                     @endif
                                     <div class="col">
-                                        <h5 class="fw-bold text-dark mb-1">{{ $experience->job_title }}</h5>
-                                        <h6 class="text-primary mb-2">{{ $experience->company }}</h6>
+                                        <h5 class="fw-bold mb-1">{{ $experience->job_title }}</h5>
+                                        <h6 class="text-muted mb-2">{{ $experience->company }}</h6>
                                         <p class="text-muted small mb-2">
                                             <i class="fas fa-calendar me-1"></i>
                                             {{ $experience->formatted_date_range }}
@@ -145,9 +145,9 @@
                                         </p>
                                         <p class="text-muted mb-2">{{ $experience->description }}</p>
                                         @if($experience->achievements)
-                                        <div class="achievements text-dark">
+                                        <div class="achievements">
                                             <strong>Key Achievements:</strong>
-                                            <ul class="text-dark text-justify mt-2">
+                                            <ul class="text-justify mt-2">
                                                 @foreach($experience->achievements as $achievement)
                                                 <li>{{ $achievement }}</li>
                                                 @endforeach
@@ -185,7 +185,7 @@
                          style="height: 200px; object-fit: cover;">
                     @endif
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold text-dark">{{ $project->title }}</h5>
+                        <h5 class="card-title fw-bold">{{ $project->title }}</h5>
                         <p class="card-text text-muted">{{ $project->description }}</p>
                         <div class="mb-3">
                             @foreach($project->technologies as $tech)
@@ -295,7 +295,7 @@
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="name" class="form-label text-dark">Full Name</label>
+                                <label for="name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" 
                                        id="name" name="name" value="{{ old('name') }}" required>
                                 @error('name')
@@ -303,7 +303,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="email" class="form-label text-dark">Email Address</label>
+                                <label for="email" class="form-label">Email Address</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" 
                                        id="email" name="email" value="{{ old('email') }}" required>
                                 @error('email')
@@ -311,7 +311,7 @@
                                 @enderror
                             </div>
                             <div class="col-12">
-                                <label for="subject" class="form-label text-dark">Subject</label>
+                                <label for="subject" class="form-label">Subject</label>
                                 <input type="text" class="form-control @error('subject') is-invalid @enderror" 
                                        id="subject" name="subject" value="{{ old('subject') }}" required>
                                 @error('subject')
@@ -319,7 +319,7 @@
                                 @enderror
                             </div>
                             <div class="col-12">
-                                <label for="message" class="form-label text-dark">Message</label>
+                                <label for="message" class="form-label">Message</label>
                                 <textarea class="form-control @error('message') is-invalid @enderror" 
                                           id="message" name="message" rows="5" required>{{ old('message') }}</textarea>
                                 @error('message')
@@ -327,7 +327,7 @@
                                 @enderror
                             </div>
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary-custom btn-lg">
+                                <button type="submit" class="btn btn-primary-custom btn-md">
                                     <i class="fas fa-paper-plane fa-sm text-light me-2"></i><span class="text-light">Send Message</span>
                                 </button>
                             </div>

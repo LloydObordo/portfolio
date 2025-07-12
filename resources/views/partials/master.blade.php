@@ -104,6 +104,24 @@
             z-index: 1;
         }
 
+        @media (prefers-color-scheme: dark) {
+    .card-body {
+        /* Surface color with 01dp elevation (5% white overlay) */
+        background: rgba(30, 30, 30, 0.95); /* #1E1E1E with 5% white overlay */
+        
+        /* Text color */
+        color: rgba(255, 255, 255, 0.87);
+        
+        /* 01dp elevation shadow (more subtle than form) */
+        box-shadow: 
+            0 1px 1px rgba(0, 0, 0, 0.12),
+            0 1px 2px rgba(0, 0, 0, 0.1);
+            
+        /* Border for depth */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+}
+
         #particles-js-experience {
             position: absolute;
             width: 100%;
@@ -207,8 +225,8 @@
         .btn-primary-custom {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
-            padding: 12px 30px;
-            font-weight: 500;
+            padding: 6px 15px;
+            font-weight: 250;
             border-radius: 50px;
         }
         
@@ -323,12 +341,53 @@
             border-left: 4px solid var(--primary-color);
         }
         
-        .contact-form {
+        /* .contact-form {
             background: white;
             border-radius: 15px;
             padding: 40px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+        } */
+
+        /* Light mode (original) */
+.contact-form {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    color: #333; /* Default text color for light mode */
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    .contact-form {
+        /* Surface color with 02dp elevation (7% white overlay) */
+        background: rgba(28, 28, 28, 0.93); /* #1C1C1C with 7% white overlay */
+        
+        /* Text color */
+        color: rgba(255, 255, 255, 0.87); /* 87% opacity white for high-emphasis text */
+        
+        /* 02dp elevation shadow */
+        box-shadow: 
+            0 1px 1px rgba(0, 0, 0, 0.14),
+            0 2px 1px rgba(0, 0, 0, 0.12);
+            
+        /* Border for better surface definition */
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* If you have specific elements inside the form */
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.87);
+        border-color: rgba(255, 255, 255, 0.23);
+    }
+
+    .contact-form label {
+        color: rgba(255, 255, 255, 0.6); /* Medium-emphasis text */
+    }
+}
 
         :target {
             scroll-margin-top: 80px;
