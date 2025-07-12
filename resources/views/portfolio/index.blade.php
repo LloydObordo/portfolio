@@ -200,7 +200,7 @@
                             @endif
                             @if($project->github_url)
                             <a href="{{ $project->github_url }}" class="btn btn-outline-secondary btn-sm" target="_blank">
-                                <i class="fab fa-github me-1"></i><span class="text-light">Code</span>
+                                <i class="fab fa-github text-light me-1"></i><span class="text-light">Code</span>
                             </a>
                             @endif
                         </div>
