@@ -24,4 +24,9 @@ class Skill extends Model
         'order' => 'integer',
         'deleted_at' => 'datetime',
     ];
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order', 'asc')->orderBy('created_at', 'asc');
+    }
 }

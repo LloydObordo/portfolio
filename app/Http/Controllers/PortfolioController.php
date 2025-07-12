@@ -37,7 +37,7 @@ class PortfolioController extends Controller
         $rawTotalExperience = round($totalExperienceDecimal, 1);
 
         $featuredProjects = Project::featured()->ordered()->limit(6)->get();
-        $skills = Skill::orderBy('category')->orderBy('order', 'asc')->get()->groupBy('category');
+        $skills = Skill::orderBy('category')->ordered()->get()->groupBy('category');
         $professionalSummary = ProfessionalSummary::first();
         $education = Education::where('active', true)->where('is_current', 1)->first();
 
