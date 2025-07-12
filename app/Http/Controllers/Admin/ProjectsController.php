@@ -256,8 +256,8 @@ class ProjectsController extends Controller
                 'github_url' => 'nullable|string',
                 'featured' => 'required|boolean',
                 'order' => 'required|integer',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+                'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
 
             // Handle validation errors
