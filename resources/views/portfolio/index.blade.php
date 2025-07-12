@@ -195,7 +195,7 @@
                         <div class="mt-auto d-flex gap-2">
                             @if($project->live_url)
                             <a href="{{ $project->live_url }}" class="btn btn-primary-custom btn-sm" target="_blank">
-                                <i class="fas fa-external-link-alt me-1"></i><span class="text-light">Live</span>
+                                <i class="fas fa-external-link-alt text-light me-1"></i><span class="text-light">Live</span>
                             </a>
                             @endif
                             @if($project->github_url)
