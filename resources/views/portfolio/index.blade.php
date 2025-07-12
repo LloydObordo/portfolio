@@ -192,12 +192,20 @@
                             <span class="badge bg-primary me-1 mb-1">{{ $tech }}</span>
                             @endforeach
                         </div>
-                        <div class="mt-auto d-flex align-items-center">
+                        <div class="mt-auto d-flex 
+                            @if($project->live_url && $project->github_url) 
+                                justify-content-between 
+                            @else 
+                                justify-content-center 
+                            @endif 
+                            align-items-center">
+                            
                             @if($project->live_url)
                             <a href="{{ $project->live_url }}" class="btn btn-primary-custom btn-sm" target="_blank">
                                 <i class="fas fa-external-link-alt text-light me-1"></i><span class="text-light">Live</span>
                             </a>
                             @endif
+                            
                             @if($project->github_url)
                             <a href="{{ $project->github_url }}" class="btn btn-outline-secondary btn-sm" target="_blank">
                                 <i class="fab fa-github text-light me-1"></i><span class="text-light">Code</span>
