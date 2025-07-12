@@ -8,7 +8,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6" data-aos="fade-right">
                 <h1 class="display-4 fw-bold">
-                    Hi, I'm <span class="text-warning">{{ $professionalSummary->shortname ?? 'Lloyd Obordo' }}</span>
+                    Hi, I'mwww <span class="text-warning">{{ $professionalSummary->shortname ?? 'Lloyd Obordo' }}</span>
                 </h1>
                 <h2 class="h3 mb-4 text-light">
                     <span id="typed-text"></span>
