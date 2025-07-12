@@ -224,7 +224,7 @@ class SkillsController extends Controller
                 'name' => 'required|string|max:255',
                 'category' => 'required|string|max:255',
                 'proficiency' => 'required|string|max:255',
-                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
                 'order' => 'required|integer',
             ]);
 
@@ -273,7 +273,7 @@ class SkillsController extends Controller
                 'name' => 'required|string|max:255',
                 'category' => 'required|string|max:255',
                 'proficiency' => 'required|string|max:255',
-                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
                 'order' => 'required|integer',
             ]);
 
