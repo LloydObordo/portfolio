@@ -195,12 +195,12 @@
                         <div class="mt-auto d-flex gap-2">
                             @if($project->live_url)
                             <a href="{{ $project->live_url }}" class="btn btn-primary-custom btn-sm" target="_blank">
-                                <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                <i class="fas fa-external-link-alt me-1"></i><span class="text-light">Live</span>
                             </a>
                             @endif
                             @if($project->github_url)
                             <a href="{{ $project->github_url }}" class="btn btn-outline-secondary btn-sm" target="_blank">
-                                <i class="fab fa-github me-1"></i>Code
+                                <i class="fab fa-github me-1"></i><span class="text-light">Code</span>
                             </a>
                             @endif
                         </div>
@@ -209,7 +209,7 @@
             </div>
             @endforeach
         </div>
-        <div class="text-center mt-5" data-aos="fade-up">
+        <div class="text-center mt-5 d-none" data-aos="fade-up">
             <a href="{{ route('projects') }}" class="btn btn-primary-custom btn-lg">
                 <i class="fas fa-eye fa-sm text-light me-2"></i><span class="text-light">View All Projects</span>
             </a>
