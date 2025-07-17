@@ -250,7 +250,7 @@
                                     @if(!empty($skill->icon))
                                         <img src="{{ asset('storage/' . $skill->icon) }}" alt="{{ $skill->name }}" class="icon-image">
                                     @endif
-                                    <span class="fw-medium text-dark">{{ $skill->name }}</span>
+                                    <span class="fw-medium text-light">{{ $skill->name }}</span>
                                 </div>
                                 <span class="text-muted">{{ $skill->proficiency }}%</span>
                             </div>
