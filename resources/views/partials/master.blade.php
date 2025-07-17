@@ -282,7 +282,7 @@
         
         .skill-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             border-radius: 10px;
             transition: width 2s ease;
         }
