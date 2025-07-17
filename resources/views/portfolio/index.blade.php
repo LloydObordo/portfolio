@@ -240,7 +240,7 @@
             <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title fw-bold text-center text-primary mb-4">
+                        <h5 class="card-title fw-bold text-center mb-4">
                             {{ ucfirst($category) }} Skills
                         </h5>
                         @foreach($categorySkills as $skill)
