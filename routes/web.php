@@ -35,7 +35,7 @@ Route::get('/', [PortfolioController::class, 'index'])->name('welcome');
 Route::get('/projects', [PortfolioController::class, 'projects'])->name('projects');
 Route::get('/project/{id}', [PortfolioController::class, 'project'])->name('project.show');
 Route::get('/download-resume', [PortfolioController::class, 'downloadResume'])->name('resume.download');
-
+Route::post('/contact/send', [PortfolioController::class, 'sendContact'])->name('contact.send');
 
 // Admin routes (for managing portfolio content)
 Route::middleware(['auth'])->prefix('admin')->group(function () {

@@ -475,6 +475,60 @@
             pointer-events: none;
             will-change: transform; /* Improves performance */
         }
+
+            /* .submit-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 0.75rem;
+        background-color: #4D6BFE;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin: 1.5rem auto;
+        display: block;
+        transition: all 0.3s ease;
+        position: relative;
+        text-align: center;
+    }
+
+    .submit-btn:hover {
+        background-color: #3d57dd;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    } */
+
+    .submit-btn:disabled {
+        background-color: #95a5a6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .spinner {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-right: 0.5rem;
+        display: none;
+    }
+
+    .btn-loading .spinner {
+        display: inline-block;
+    }
+
+    .btn-text {
+        display: inline-block;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .form-group.text-center .g-recaptcha {
+        display: inline-block;
+    }
     </style>
 </head>
 <body>

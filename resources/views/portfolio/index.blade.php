@@ -290,8 +290,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                     @endif
-                    
-                    <form action="#" method="POST">
+                    @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    @endif
+                    <!-- Header of Contact Form -->
+                    <h3 class="h4 fw-bold mb-4">Contact Me</h3>
+                    <p class="text-muted mb-4">
+                        Have a question or want to work together? Fill out the form below and I'll get back to you as soon as possible.
+                    </p>
+                    <!-- Contact Form -->
+                    <form action="{{ route('contact.send') }}" method="POST" id="contactForm">
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -326,9 +337,24 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-12">
+                                <div class="form-group text-center">
+                                    <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ config('services.recaptcha.site') }}" data-callback="recaptchaSuccess"></div>
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="text-danger d-block mt-2">
+                                            {{ $errors->first('g-recaptcha-response') }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                                
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary-custom btn-md">
-                                    <i class="fas fa-paper-plane fa-sm text-light me-2"></i><span class="text-light">Send Message</span>
+                                <button type="submit" class="btn btn-primary-custom btn-md submit-btn" id="submitBtn" disabled>
+                                    <span class="spinner" style="display: none;">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </span>
+                                    <i class="fas fa-paper-plane fa-sm text-light me-2"></i><span class="btn-text text-light">Send Messages</span>
                                 </button>
                             </div>
                         </div>
@@ -388,6 +414,29 @@
 </section>
 @endsection
 
-@push('scripts')
+@section('scripts')
+<!-- Google reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-@endpush
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("contactForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const spinner = submitBtn.querySelector(".spinner");
+        const btnText = submitBtn.querySelector(".btn-text");
+
+        function recaptchaSuccess() {
+            submitBtn.disabled = false;
+        }
+
+        form.addEventListener("submit", function() {
+            spinner.style.display = "inline-block";
+            btnText.textContent = "Sending...";
+            submitBtn.disabled = true;
+        });
+
+        // Make recaptchaSuccess available globally
+        window.recaptchaSuccess = recaptchaSuccess;
+    });
+</script>
+@endsection
