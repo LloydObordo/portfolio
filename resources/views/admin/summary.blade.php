@@ -71,6 +71,23 @@
         align-items: center;
         justify-content: center;
     }
+
+    .invalid-feedback.d-block {
+        display: block !important;
+    }
+
+    .is-invalid ~ .invalid-feedback {
+        display: block;
+    }
+
+    .is-infile {
+        border-color: #dc3545;
+    }
+
+    /* For file inputs specifically */
+    .form-control-file.is-invalid ~ .invalid-feedback {
+        display: block;
+    }
 </style>
 @endsection
 
@@ -179,8 +196,8 @@
                               <input type="file" id="profile_image" name="profile_image" accept="image/*" onchange="previewImage(this, 'profileImagePreview')">
                             </div>
                             <small class="form-text text-muted">Recommended size: 500x500 pixels</small>
+                            <div class="invalid-feedback d-block"></div>
                           </div>
-                          <div class="invalid-feedback"></div>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -198,8 +215,8 @@
                               <input type="file" id="cover_image" name="cover_image" accept="image/*" onchange="previewImage(this, 'coverImagePreview')">
                             </div>
                             <small class="form-text text-muted">Recommended size: 1500x500 pixels</small>
+                            <div class="invalid-feedback d-block"></div>
                           </div>
-                          <div class="invalid-feedback"></div>
                         </div>
                       </div>
                     </div>
@@ -429,6 +446,20 @@
 <!-- Fancybox JS -->
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>
 <script>
+    @if(Session::has('error'))
+        toastr.error('{{ Session::get('error')}}', 'Administrator', {timeOut: 3000, progressBar: true});
+    @elseif(Session::has('success'))
+        toastr.success('{{ Session::get('success')}}', 'Administrator', {timeOut: 3000, progressBar: true});
+    @endif
+
+    // Handle Validation Error Messages
+    @if($errors->any())
+      @foreach ($errors->all() as $error)
+        toastr.error('{{ $error }}', 'Administrator', {timeOut: 3000, progressBar: true});
+      @endforeach
+    @endif
+</script>
+<script>
   $(document).ready(function() {
         $('[data-fancybox="photos"]').fancybox({
             buttons: [
@@ -545,6 +576,48 @@
                 }, 1000);
             }
 
+            // function handleError(xhr) {
+            //     // Close the loading dialog immediately when error occurs
+            //     Swal.close();
+                
+            //     if (xhr.status === 422) {
+            //         // Validation errors
+            //         const errors = xhr.responseJSON.errors;
+            //         $.each(errors, function(key, value) {
+            //             const input = form.find('[name="' + key + '"]');
+            //             const feedback = input.next('.invalid-feedback');
+
+            //             // Special handling for file inputs
+            //             if (input.attr('type') === 'file') {
+            //                 feedback = input.closest('.form-group').find('.invalid-feedback');
+            //             } else {
+            //                 feedback = input.next('.invalid-feedback');
+            //             }
+                        
+            //             input.addClass('is-invalid');
+            //             if (feedback.length) {
+            //                 feedback.text(value[0]);
+            //             } else {
+            //                 input.closest('.form-group').append('<div class="invalid-feedback">' + value[0] + '</div>');
+            //             }
+            //         });
+            //         // Scroll to first error
+            //         const firstError = form.find('.is-invalid').first();
+            //         if (firstError.length) {
+            //             $('html, body').animate({
+            //                 scrollTop: firstError.offset().top - 100
+            //             }, 500);
+            //         }
+            //     } else {
+            //         toastr.error(xhr.responseJSON.message || 'An error occurred. Please try again.', 'Error', {
+            //             timeOut: 3000,
+            //             progressBar: true,
+            //             closeButton: true,
+            //             newestOnTop: true
+            //         });
+            //     }
+            // }
+
             function handleError(xhr) {
                 // Close the loading dialog immediately when error occurs
                 Swal.close();
@@ -554,15 +627,46 @@
                     const errors = xhr.responseJSON.errors;
                     $.each(errors, function(key, value) {
                         const input = form.find('[name="' + key + '"]');
-                        const feedback = input.next('.invalid-feedback');
+                        let feedback;
                         
-                        input.addClass('is-invalid');
-                        if (feedback.length) {
-                            feedback.text(value[0]);
+                        // Special handling for file inputs
+                        if (input.attr('type') === 'file') {
+                            // For profile/cover images, the structure is different
+                            if (key === 'profile_image' || key === 'cover_image') {
+                                feedback = input.closest('.d-block').find('.invalid-feedback');
+                            } else {
+                                feedback = input.closest('.form-group').find('.invalid-feedback');
+                            }
                         } else {
-                            input.closest('.form-group').append('<div class="invalid-feedback">' + value[0] + '</div>');
+                            feedback = input.next('.invalid-feedback');
+                        }
+                        
+                        // Add invalid class to the parent container for visual feedback
+                        if (key === 'profile_image' || key === 'cover_image') {
+                            input.closest('.d-block').addClass('has-error');
+                        } else {
+                            input.addClass('is-invalid');
+                        }
+                        
+                        if (feedback.length) {
+                            feedback.text(value[0]).addClass('d-block');
+                        } else {
+                            // For file inputs, append to the d-block container
+                            if (key === 'profile_image' || key === 'cover_image') {
+                                input.closest('.d-block').append('<div class="invalid-feedback d-block">' + value[0] + '</div>');
+                            } else {
+                                input.closest('.form-group').append('<div class="invalid-feedback">' + value[0] + '</div>');
+                            }
                         }
                     });
+                    
+                    // Scroll to first error
+                    const firstError = form.find('.is-invalid, .has-error').first();
+                    if (firstError.length) {
+                        $('html, body').animate({
+                            scrollTop: firstError.offset().top - 100
+                        }, 500);
+                    }
                 } else {
                     toastr.error(xhr.responseJSON.message || 'An error occurred. Please try again.', 'Error', {
                         timeOut: 3000,

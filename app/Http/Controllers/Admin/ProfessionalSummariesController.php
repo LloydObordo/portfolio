@@ -90,14 +90,6 @@ class ProfessionalSummariesController extends Controller
         }
     }
 
-    /**
-     * Handle file upload and storage
-     *
-     * @param \Illuminate\Http\UploadedFile $file
-     * @param string $directory
-     * @param string|null $oldFilePath
-     * @return string
-     */
     private function uploadFile($file, $directory, $oldFilePath = null)
     {
         // Delete old file if exists

@@ -36,7 +36,8 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); */
+            background-color: var(--bg-dark);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -105,22 +106,22 @@
         }
 
         @media (prefers-color-scheme: dark) {
-    .card-body {
-        /* Surface color with 01dp elevation (5% white overlay) */
-        background: rgba(30, 30, 30, 0.95); /* #1E1E1E with 5% white overlay */
-        
-        /* Text color */
-        color: rgba(255, 255, 255, 0.87);
-        
-        /* 01dp elevation shadow (more subtle than form) */
-        box-shadow: 
-            0 1px 1px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.1);
-            
-        /* Border for depth */
-        border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-}
+            .card-body {
+                /* Surface color with 01dp elevation (5% white overlay) */
+                background: rgba(30, 30, 30, 0.95); /* #1E1E1E with 5% white overlay */
+                
+                /* Text color */
+                color: rgba(255, 255, 255, 0.87);
+                
+                /* 01dp elevation shadow (more subtle than form) */
+                box-shadow: 
+                    0 1px 1px rgba(0, 0, 0, 0.12),
+                    0 1px 2px rgba(0, 0, 0, 0.1);
+                    
+                /* Border for depth */
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
 
         #particles-js-experience {
             position: absolute;
@@ -201,7 +202,7 @@
 
         .professional-photo {
             object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.2);
+            /* border: 4px solid rgba(255, 255, 255, 0.2); */
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }

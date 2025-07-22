@@ -15,16 +15,16 @@
                     {{ $professionalSummary->summary ?? 'A passionate full-stack developer with over 5 years of experience creating web applications that solve real-world problems.' }}
                 </p>
                 <div class="social-links">
-                    <a href="https://linkedin.com/in/yourprofile" class="text-light me-3" target="_blank">
+                    <a href="{{ $professionalSummary->linkedin ?? '#' }}" class="text-light me-3" target="_blank">
                         <i class="fab fa-linkedin fa-lg"></i>
                     </a>
-                    <a href="https://github.com/yourusername" class="text-light me-3" target="_blank">
+                    <a href="{{ $professionalSummary->github ?? '#' }}" class="text-light me-3" target="_blank">
                         <i class="fab fa-github fa-lg"></i>
                     </a>
-                    <a href="https://twitter.com/yourusername" class="text-light me-3" target="_blank">
-                        <i class="fab fa-twitter fa-lg"></i>
+                    <a href="https://www.tiktok.com/@lloydtech24" class="text-light me-3" target="_blank">
+                        <i class="fab fa-tiktok fa-lg"></i>
                     </a>
-                    <a href="mailto:{{ $user->email ?? 'joedhellloydobordo@gmail.com'}}" class="text-light" target="_blank">
+                    <a href="mailto:{{ $professionalSummary->email ?? 'joedhellloydobordo@gmail.com'}}" class="text-light" target="_blank">
                         <i class="fas fa-envelope fa-lg"></i>
                     </a>
                 </div>

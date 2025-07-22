@@ -48,13 +48,13 @@
 <body>
     <div class="container">
         <div class="image-section">
-             <div id="particles-js-login-left"></div>
+            <div id="particles-js-login-left"></div>
             <img src="{{ asset('images/logo.png') }}" class="img-fluid shadow-lg profile-image" alt="Logo">
             {{-- <h2>Portfolio</h2> --}}
         </div>
         
         <div class="login-section">
-             <div id="particles-js-login-right"></div>
+            <div id="particles-js-login-right"></div>
             <div class="login-container">
                 <div class="login-header">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="brand-image login-image">
@@ -199,6 +199,5 @@
             }
         });
     </script>
-
 </body>
 </html>

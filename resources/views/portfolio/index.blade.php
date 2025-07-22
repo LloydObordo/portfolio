@@ -8,7 +8,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6" data-aos="fade-right">
                 <h1 class="display-4 fw-bold">
-                    Hi, I'm <span class="text-warning">{{ $professionalSummary->shortname ?? 'Lloyd Obordo' }}</span>
+                    Hi, I'm <span class="text-primary">{{ $professionalSummary->shortname ?? 'Lloyd Obordo' }}</span>
                 </h1>
                 <h2 class="h3 mb-4 text-light">
                     <span id="typed-text"></span>
@@ -394,14 +394,14 @@
                 <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="400">
                     <h5 class="mb-3">Follow Me</h5>
                     <div class="social-links">
-                        <a href="https://linkedin.com/in/yourprofile" class="btn btn-outline-primary btn-lg me-2" target="_blank">
+                        <a href="{{ $professionalSummary->linkedin ?? '#' }}" class="btn btn-outline-primary btn-lg me-2" target="_blank">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="https://github.com/yourusername" class="btn btn-outline-secondary btn-lg me-2" target="_blank">
+                        <a href="{{ $professionalSummary->github ?? '#' }}" class="btn btn-outline-secondary btn-lg me-2" target="_blank">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://twitter.com/yourusername" class="btn btn-outline-info btn-lg me-2" target="_blank">
-                            <i class="fab fa-twitter"></i>
+                        <a href="https://www.tiktok.com/@lloydtech24" class="btn btn-outline-info btn-lg me-2" target="_blank">
+                            <i class="fab fa-tiktok"></i>
                         </a>
                         <a href="https://instagram.com/yourusername" class="btn btn-outline-danger btn-lg" target="_blank">
                             <i class="fab fa-instagram"></i>
