@@ -179,47 +179,49 @@
         <div class="row g-4">
             @foreach($featuredProjects as $project)
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                <div class="card project-card h-100 border-0 shadow-sm">
-                    @if($project->image)
-                    <img src="{{ asset('storage/' . $project->image) }}" class="card-img-top" alt="{{ $project->title }}" 
-                         style="height: 200px; object-fit: cover;">
-                    @endif
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold">{{ $project->title }}</h5>
-                        <p class="card-text text-muted">{{ $project->description }}</p>
-                        <div class="mb-3">
-                            @foreach($project->technologies as $tech)
-                            <span class="badge bg-primary me-1 mb-1">{{ $tech }}</span>
-                            @endforeach
-                        </div>
-                        <div class="mt-auto d-flex 
-                            @if($project->live_url && $project->github_url) 
-                                justify-content-between 
-                            @else 
-                                justify-content-center 
-                            @endif 
-                            align-items-center">
-                            
-                            @if($project->live_url)
-                            <a href="{{ $project->live_url }}" class="btn btn-primary-custom btn-sm" target="_blank">
-                                <i class="fas fa-external-link-alt text-light me-1"></i><span class="text-light">Live</span>
-                            </a>
-                            @endif
-                            
-                            @if($project->github_url)
-                            <a href="{{ $project->github_url }}" class="btn btn-outline-secondary btn-sm" target="_blank">
-                                <i class="fab fa-github text-light me-1"></i><span class="text-light">Code</span>
-                            </a>
-                            @endif
+                <a href="{{ route('project.show', ['id' => $project->id, 'title' => Str::slug($project->title)]) }}" class="text-decoration-none">
+                    <div class="card project-card h-100 border-0 shadow-sm">
+                        @if($project->image)
+                        <img src="{{ asset('storage/' . $project->image) }}" class="card-img-top" alt="{{ $project->title }}" 
+                            style="height: 200px; object-fit: cover;">
+                        @endif
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold text-light">{{ $project->title }}</h5>
+                            <p class="card-text text-muted">{{ $project->description }}</p>
+                            <div class="mb-3">
+                                @foreach($project->technologies as $tech)
+                                <span class="badge bg-primary me-1 mb-1">{{ $tech }}</span>
+                                @endforeach
+                            </div>
+                            <div class="mt-auto d-flex 
+                                @if($project->live_url && $project->github_url) 
+                                    justify-content-between 
+                                @else 
+                                    justify-content-center 
+                                @endif 
+                                align-items-center d-none">
+                                
+                                @if($project->live_url)
+                                <a href="{{ $project->live_url }}" class="btn btn-primary-custom btn-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt text-light me-1"></i><span class="text-light">Live</span>
+                                </a>
+                                @endif
+                                
+                                @if($project->github_url)
+                                <a href="{{ $project->github_url }}" class="btn btn-outline-secondary btn-sm" target="_blank">
+                                    <i class="fab fa-github text-light me-1"></i><span class="text-light">Code</span>
+                                </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             @endforeach
         </div>
-        <div class="text-center mt-5 d-none" data-aos="fade-up">
-            <a href="{{ route('projects') }}" class="btn btn-primary-custom btn-lg">
-                <i class="fas fa-eye fa-sm text-light me-2"></i><span class="text-light">View All Projects</span>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{{ route('projects') }}" class="btn btn-primary-custom btn-md">
+                <i class="fas fa-eye fa-lg text-light me-2"></i><span class="text-light">View All Projects</span>
             </a>
         </div>
     </div>

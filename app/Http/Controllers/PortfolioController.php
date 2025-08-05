@@ -69,17 +69,18 @@ class PortfolioController extends Controller
         $projects = $query->paginate(12);
         $categories = Project::distinct('category')->pluck('category');
 
-        return view('portfolio.projects', compact('projects', 'categories'));
+        return view('portfolio.projects.index', compact('projects', 'categories'));
     }
 
-    public function project($id)
+    public function project($id, $slug = null)
     {
         $project = Project::findOrFail($id);
+        $project->gallery = json_decode($project->gallery, true) ?? [];
         $relatedProjects = Project::where('category', $project->category)
                                 ->where('id', '!=', $project->id)
                                 ->limit(3)->get();
 
-        return view('portfolio.project-detail', compact('project', 'relatedProjects'));
+        return view('portfolio.projects.project-detail', compact('project', 'relatedProjects'));
     }
 
     public function downloadResume()
@@ -123,34 +124,34 @@ class PortfolioController extends Controller
                 'email' => 'required|email|max:150',
                 'subject' => 'nullable|string|max:255',
                 'message' => 'required|string',
-                // 'g-recaptcha-response' => 'required'
+                'g-recaptcha-response' => 'required'
             ], [
                 'name.required' => 'Name is required.',
                 'email.required' => 'Email is required.',
                 'email.email' => 'Please provide a valid email address.',
                 'message.required' => 'Message content is required.',
-                // 'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
+                'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
             ]);
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            // // Validate reCAPTCHA response with Google
-            // $recaptchaResponse = $request->input('g-recaptcha-response');
-            // $recaptchaSecret = config('services.recaptcha.secret');
+            // Validate reCAPTCHA response with Google
+            $recaptchaResponse = $request->input('g-recaptcha-response');
+            $recaptchaSecret = config('services.recaptcha.secret');
 
-            // $googleResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            //     'secret' => $recaptchaSecret,
-            //     'response' => $recaptchaResponse,
-            //     'remoteip' => $request->ip(),
-            // ]);
+            $googleResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => $recaptchaSecret,
+                'response' => $recaptchaResponse,
+                'remoteip' => $request->ip(),
+            ]);
 
-            // $responseBody = $googleResponse->json();
+            $responseBody = $googleResponse->json();
 
-            // if (!isset($responseBody['success']) || !$responseBody['success']) {
-            //     return redirect()->back()->withErrors(['g-recaptcha-response' => 'reCAPTCHA verification failed. Please try again.'])->withInput();
-            // }
+            if (!isset($responseBody['success']) || !$responseBody['success']) {
+                return redirect()->back()->withErrors(['g-recaptcha-response' => 'reCAPTCHA verification failed. Please try again.'])->withInput();
+            }
 
             // Retrieve validated data
             $validated = $validator->validated();

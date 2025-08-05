@@ -33,7 +33,7 @@ Route::prefix('/google2fa')->group(function () {
 
 Route::get('/', [PortfolioController::class, 'index'])->name('welcome');
 Route::get('/projects', [PortfolioController::class, 'projects'])->name('projects');
-Route::get('/project/{id}', [PortfolioController::class, 'project'])->name('project.show');
+Route::get('/project/{id}/{title}', [PortfolioController::class, 'project'])->name('project.show');
 Route::get('/download-resume', [PortfolioController::class, 'downloadResume'])->name('resume.download');
 Route::post('/contact/send', [PortfolioController::class, 'sendContact'])->name('contact.send');
 
