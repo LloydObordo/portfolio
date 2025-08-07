@@ -834,7 +834,8 @@
         /* ========== RESPONSIVE STYLES ========== */
         @media (max-width: 992px) {
             .navbar-collapse {
-                background: rgba(255, 255, 255, 0.98);
+                /* background: rgba(255, 255, 255, 0.98); */
+                background: rgba(65, 65, 65, 0.98);
                 padding: 20px;
                 border-radius: 10px;
                 margin-top: 10px;
