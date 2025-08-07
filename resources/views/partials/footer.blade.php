@@ -32,11 +32,11 @@
             <div class="col-lg-2 col-md-6 mb-4">
                 <h6 class="fw-bold mb-3">Navigation</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#home" class="text-muted text-decoration-none">Home</a></li>
-                    <li><a href="#about" class="text-muted text-decoration-none">About</a></li>
-                    <li><a href="#experience" class="text-muted text-decoration-none">Experience</a></li>
-                    <li><a href="#projects" class="text-muted text-decoration-none">Projects</a></li>
-                    <li><a href="#contact" class="text-muted text-decoration-none">Contact</a></li>
+                    <li><a href="{{ url('/#home') }}" class="text-muted text-decoration-none">Home</a></li>
+                    <li><a href="{{ url('/#about') }}" class="text-muted text-decoration-none">About</a></li>
+                    <li><a href="{{ url('/#experience') }}" class="text-muted text-decoration-none">Experience</a></li>
+                    <li><a href="{{ url('/#projects') }}" class="text-muted text-decoration-none">Projects</a></li>
+                    <li><a href="{{ url('/#contact') }}" class="text-muted text-decoration-none">Contact</a></li>
                 </ul>
             </div>
             {{-- <div class="col-lg-3 col-md-6 mb-4">
