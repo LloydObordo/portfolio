@@ -113,7 +113,6 @@ class PortfolioController extends Controller
 
     public function sendContact(Request $request)
     {
-        // dd($request->all());
         // Begin a database transaction
         DB::beginTransaction();
 
@@ -179,7 +178,11 @@ class PortfolioController extends Controller
                 Mail::to('joedhellloydobordo@gmail.com')->send(new ContactNotification($details));
             } catch (\Exception $mailException) {
                 \Log::error('Failed to send email notification: ' . $mailException->getMessage());
-                return redirect()->back()->with('error', 'Your message was saved, but there was an error sending the notification email. Please contact support.');
+                // Redirect with error message and anchor to #contact
+                return redirect()->back()->with([
+                    'error' => 'Your message was saved, but there was an error sending the notification email. Please contact support.',
+                ])->withFragment('contact');
+                
             }
 
             // Commit transaction after successful save
