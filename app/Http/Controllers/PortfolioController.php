@@ -133,7 +133,10 @@ class PortfolioController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
+                return response()->json([
+                    'errors' => $validator->errors(),
+                    'message' => 'Validation failed.'
+                ], 422);
             }
 
             // Validate reCAPTCHA response with Google
@@ -149,7 +152,10 @@ class PortfolioController extends Controller
             $responseBody = $googleResponse->json();
 
             if (!isset($responseBody['success']) || !$responseBody['success']) {
-                return redirect()->back()->withErrors(['g-recaptcha-response' => 'reCAPTCHA verification failed. Please try again.'])->withInput();
+                return response()->json([
+                    'errors' => ['g-recaptcha-response' => ['reCAPTCHA verification failed. Please try again.']],
+                    'message' => 'reCAPTCHA verification failed.'
+                ], 422);
             }
 
             // Retrieve validated data
@@ -178,26 +184,32 @@ class PortfolioController extends Controller
                 Mail::to('joedhellloydobordo@gmail.com')->send(new ContactNotification($details));
             } catch (\Exception $mailException) {
                 \Log::error('Failed to send email notification: ' . $mailException->getMessage());
-                // Redirect with error message and anchor to #contact
-                return redirect()->back()->with([
-                    'error' => 'Your message was saved, but there was an error sending the notification email. Please contact support.',
-                ])->withFragment('contact');
+            
+                // Commit the transaction even if email fails
+                DB::commit();
                 
+                // Redirect with error message and anchor to #contact
+                return response()->json([
+                    'message' => 'Your message was received, but there was an error sending the notification email. We will contact you soon.'
+                ], 200);
             }
 
             // Commit transaction after successful save
             DB::commit();
 
             // Redirect with success message and anchor to #contact
-            return redirect()->back()->with([
-                'success' => 'Your message has been sent successfully!',
-            ])->withFragment('contact');
+            return response()->json([
+                'message' => 'Your message has been sent successfully!'
+            ], 200);
 
         } catch (\Exception $e) {
             // Catch other exceptions, rollback and log the error
             DB::rollBack();
             \Log::error('Failed to send contact message: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while sending your message. Please try again.');
+            
+            return response()->json([
+                'message' => 'An error occurred while sending your message. Please try again.'
+            ], 500);
         }
     }
 }

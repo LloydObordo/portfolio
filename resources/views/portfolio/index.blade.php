@@ -309,45 +309,33 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                                       id="name" name="name" value="{{ old('name') }}" required>
-                                @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <input type="text" class="form-control" 
+                                       id="name" name="name">
+                                <div class="invalid-feedback" id="name-error"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                       id="email" name="email" value="{{ old('email') }}" required>
-                                @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <input type="email" class="form-control" 
+                                       id="email" name="email">
+                                <div class="invalid-feedback" id="email-error"></div>
                             </div>
                             <div class="col-12">
                                 <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control @error('subject') is-invalid @enderror" 
-                                       id="subject" name="subject" value="{{ old('subject') }}" required>
-                                @error('subject')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <input type="text" class="form-control" 
+                                       id="subject" name="subject">
+                                <div class="invalid-feedback" id="subject-error"></div>
                             </div>
                             <div class="col-12">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control @error('message') is-invalid @enderror" 
-                                          id="message" name="message" rows="5" required>{{ old('message') }}</textarea>
-                                @error('message')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <textarea class="form-control" 
+                                          id="message" name="message" rows="5"></textarea>
+                                <div class="invalid-feedback" id="message-error"></div>
                             </div>
 
                             <div class="col-12">
                                 <div class="form-group text-center">
                                     <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ config('services.recaptcha.site') }}" data-callback="recaptchaSuccess"></div>
-                                    @if ($errors->has('g-recaptcha-response'))
-                                        <span class="text-danger d-block mt-2">
-                                            {{ $errors->first('g-recaptcha-response') }}
-                                        </span>
-                                    @endif
+                                    <div class="invalid-feedback" id="recaptcha-error"></div>
                                 </div>
                             </div>
                                 
@@ -361,6 +349,7 @@
                             </div>
                         </div>
                     </form>
+                </div>
                 </div>
                 
                 <!-- Contact Info -->
@@ -420,7 +409,7 @@
 <!-- Google reCAPTCHA -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-<script>
+{{-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("contactForm");
         const submitBtn = document.getElementById("submitBtn");
@@ -439,6 +428,100 @@
 
         // Make recaptchaSuccess available globally
         window.recaptchaSuccess = recaptchaSuccess;
+    });
+</script> --}}
+<script>
+    // Initialize Toastr with options
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    // ReCAPTCHA callback - make sure this is globally available
+    window.recaptchaSuccess = function(response) {
+        document.getElementById('submitBtn').disabled = false;
+    };
+
+    $(document).ready(function() {
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            const $submitBtn = $('#submitBtn');
+            $submitBtn.find('.spinner').show();
+            $submitBtn.find('.btn-text').text('Sending...');
+            $submitBtn.prop('disabled', true);
+            
+            // Clear previous errors
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').text('');
+            
+            // Get form data
+            var formData = $(this).serialize();
+            
+            // AJAX request
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                dataType: 'json', // Ensure we expect JSON response
+                success: function(response) {
+                    // Hide loading spinner
+                    $submitBtn.find('.spinner').hide();
+                    $submitBtn.find('.btn-text').text('Send Messages');
+                    $submitBtn.prop('disabled', false);
+                    
+                    // Show success message
+                    toastr.success(response.message || 'Your message has been sent successfully!');
+                    
+                    // Reset form
+                    $('#contactForm')[0].reset();
+                    
+                    // Reset reCAPTCHA if it exists
+                    if (typeof grecaptcha !== 'undefined') {
+                        grecaptcha.reset();
+                        $submitBtn.prop('disabled', true);
+                    }
+                },
+                error: function(xhr) {
+                    // Hide loading spinner
+                    $submitBtn.find('.spinner').hide();
+                    $submitBtn.find('.btn-text').text('Send Messages');
+                    $submitBtn.prop('disabled', false);
+                    
+                    if (xhr.status === 422) {
+                        // Validation errors
+                        var errors = xhr.responseJSON.errors;
+                        $.each(errors, function(key, value) {
+                            var input = $('[name="' + key + '"]');
+                            input.addClass('is-invalid');
+                            $('#' + key + '-error').text(value[0]);
+                            
+                            if (key === 'g-recaptcha-response') {
+                                $('#recaptcha-error').text(value[0]);
+                            }
+                        });
+                        toastr.error('Please fix the errors in the form.');
+                    } else {
+                        // Other errors
+                        var errorMsg = xhr.responseJSON && xhr.responseJSON.message 
+                            ? xhr.responseJSON.message 
+                            : 'An error occurred. Please try again.';
+                        toastr.error(errorMsg);
+                    }
+                }
+            });
+        });
     });
 </script>
 @endsection
